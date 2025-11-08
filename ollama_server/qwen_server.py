@@ -1,16 +1,14 @@
-import requests, json
+from ollama import chat
 
-r = requests.post("http://localhost:11434/api/generate", json={
-    "model": "hf.co/Qwen/Qwen3-1.7B-GGUF:latest",
-    "prompt": "Write a small paragraph on dolphins./no_think",
-    "stream": True
-}, stream=True)
+response= chat(model='hf.co/Qwen/Qwen3-1.7B-GGUF:latest', messages=[
+  {
+    'role': 'user',
+    'content': 'What did i ask you previously?/nothink',
+    'format': 'json'
+  },
+],
+  stream=True
+)
 
-for line in r.iter_lines():
-    if line:
-        try:
-          res = json.loads(line).get("response")
-          if res:
-             print(res, end='', flush=True)
-        except json.JSONDecodeError:
-           continue
+for line in response:
+    print(line.message.content, end='', flush=True)
