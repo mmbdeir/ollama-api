@@ -1,6 +1,6 @@
-from ollama import chat
+from ollama import chat, ChatResponse
 
-response= chat(model='hf.co/Qwen/Qwen3-1.7B-GGUF:latest', messages=[
+response: ChatResponse = chat(model='hf.co/Qwen/Qwen3-1.7B-GGUF:latest', messages=[
   {
     'role': 'user',
     'content': 'What did i ask you previously?/nothink',
